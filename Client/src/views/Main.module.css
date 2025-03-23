@@ -1,0 +1,16 @@
+.Container {
+  /* background-color: red; */
+  margin: 0;
+  padding: 0;
+  width: 400px;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  /* gap: 4rem; */
+}
+
+@media (min-width: 600px) {
+  .Container {
+    width: 550px;
+  }
+}

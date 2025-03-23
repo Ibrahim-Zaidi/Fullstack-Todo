@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.todoContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem 1rem 0 0;
+  height: auto;
+  background-color: var(--Very_Dark_Desaturated_Blue);
+}
+
+.todoContainer li {
+  padding-bottom: 0.5rem;
+  width: 100%;
+  height: 5rem;
+  display: grid;
+  grid-template-columns: 1.5fr 8fr 1fr;
+  align-items: center;
+  border-bottom: 0.1rem solid white;
+  list-style: none;
+}
+
+.todoContainer input[type="checkbox"] {
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 2rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  left: 1.8rem;
+}
+
+.todoContainer img {
+  height: 2.5rem;
+}
+
+.todoContainer button {
+  background: transparent;
+  border: transparent;
+}
+
+.todoContainer button:hover {
+  cursor: pointer;
+}
+
+.todoContainer label {
+  font-size: 1.5rem;
+}

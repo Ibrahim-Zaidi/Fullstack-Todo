@@ -1,0 +1,27 @@
+.footerContainer {
+  width: 100%;
+  background-color: var(--Very_Dark_Desaturated_Blue);
+  border-radius: 0 0 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  /* padding: 2rem; */
+  height: 6rem;
+  aspect-ratio: 1;
+  /* padding: 1rem; */
+
+  overflow: hidden;
+  align-items: center;
+}
+
+.footerContainer div {
+  display: flex;
+}
+
+.footerContainer label {
+  padding: 1.5rem;
+  color: var(--Dark_Grayish_Blue);
+}
+
+.footerContainer label:hover {
+  cursor: pointer;
+}

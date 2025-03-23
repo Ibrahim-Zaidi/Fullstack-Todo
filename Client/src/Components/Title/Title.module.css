@@ -1,0 +1,11 @@
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 92.7%;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.titleContainer div:hover {
+  cursor: pointer;
+}

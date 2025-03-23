@@ -1,0 +1,28 @@
+.inputContainer {
+  width: 100%;
+  height: 5rem;
+  background-color: antiquewhite;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--Very_Dark_Desaturated_Blue);
+  margin-bottom: 3rem;
+}
+
+.inputContainer input {
+  width: 100%;
+  /* background-color: antiquewhite; */
+  /* display: flex; */
+  background-color: transparent;
+  padding: 2rem;
+  border: none;
+}
+
+.inputContainer input:focus {
+  outline: none;
+}
+
+.inputContainer button {
+  width: 5rem;
+  background-color: transparent;
+  border: none;
+}
