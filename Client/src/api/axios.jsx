@@ -9,7 +9,4 @@ function api() {
     },
   });
 }
-
-// api.withCredentials
-
 export default api;
