@@ -5,8 +5,6 @@ import sequelize_ from "../configue/db.js";
 
 async function get_todos(req, res) {
   try {
-    console.log(req.user);
-
     const { user_id } = req.user;
 
     const todo_ = await sequelize_.query(

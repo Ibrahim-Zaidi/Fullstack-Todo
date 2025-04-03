@@ -1,20 +1,19 @@
 import { Op } from "sequelize";
 import users from "../models/userModel.js";
+import bcrypt from "bcrypt";
+import "dotenv/config";
 
 async function register(req, res) {
   const { username, email, number, password } = req.body;
 
   try {
     if (!username || !email || !number || !password) {
-      // return res
-      //   .status(404)
-      //   .json({ message: "" });
-
       throw new Error("please enter all your information");
     }
 
     const find_user = await users.findOne({
       //checks if the username , email or nubmer has been used before from someone else
+
       where: {
         [Op.or]: {
           username: username,
@@ -30,21 +29,24 @@ async function register(req, res) {
       );
 
     if (!find_user) {
-      const created_user = await users.create({
+      const saltRoundes = 10;
+      const hashed_password = await bcrypt.hash(password, saltRoundes);
+      const email_ = email.toLowerCase();
+
+      console.log(hashed_password);
+
+      const user_ = await users.create({
         username: username,
-        email: email,
+        email: email_,
         number: number,
-        password: password,
+        password: hashed_password,
       });
 
-      return res
-        .status(200)
-        .json({ message: "your account has been created succefully!" });
+      return res.status(200).json({
+        message: "your account has been created succefully!",
+        user: user_,
+      });
     }
-
-    // return res
-    //   .status(404)
-    //   .json({ message: "username or password has been taken before !" });
   } catch (err) {
     return res.status(404).json({ message: err.message });
   }
