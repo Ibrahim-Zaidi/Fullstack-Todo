@@ -1,16 +1,30 @@
 import express from "express";
-import bodyParser from "body-parser";
-import mainRoute from "./routes/mainRoute.js";
+import cookieParser from "cookie-parser";
 import cors from "cors";
+import general_routes from "./routes/generalRoute.js";
+import auth_routes from "./routes/authRoute.js";
 import "dotenv/config";
 
 const app = express();
-const port = process.env.PORT || 5100;
-app.use(cors());
-app.use(bodyParser.json());
 
-app.use("/main", mainRoute);
+//app middlwares
 
-app.listen(port, () => {
-  console.log("the server is runing on port " + port);
+app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+// routes
+
+app.use("/", general_routes);
+app.use("/main", auth_routes);
+
+//starting the server
+
+app.listen(process.env.SERVER_PORT, () => {
+  console.log("server is running on " + process.env.SERVER_PORT);
 });
