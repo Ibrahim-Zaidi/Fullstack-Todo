@@ -8,6 +8,8 @@ async function add_todo(req, res) {
       user: { user_id },
     } = req;
 
+    if (!content) throw new Error("please enter something");
+
     const user = await users.findOne({
       where: {
         user_id: user_id,

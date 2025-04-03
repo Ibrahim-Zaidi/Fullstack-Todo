@@ -1,11 +1,10 @@
 import users from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import "dotenv/config";
 
 async function login(req, res) {
   try {
-    // console.log(req.cookie);
-
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -21,7 +20,9 @@ async function login(req, res) {
 
     if (!user) throw new Error("you are not registered! please register first");
 
-    if (user.password === password) {
+    const password_true = await bcrypt.compare(password, user.password);
+
+    if (password_true) {
       const { user_id, username } = user;
 
       const accessToken = jwt.sign(
@@ -37,7 +38,7 @@ async function login(req, res) {
           httpOnly: true,
         })
         .status(200)
-        .send({ message: "you are logged in !" });
+        .send({ message: "you are logged in !", user });
     }
 
     throw new Error("you made a wrong password");

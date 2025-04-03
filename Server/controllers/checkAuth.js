@@ -5,13 +5,21 @@ const accessKey = process.env.SECRET_KEY;
 
 export default function check_auth_route(req, res) {
   try {
-    const cookies = req.cookies;
+    const { AccessToken } = req.cookies;
 
-    if (!cookies) throw new Error("no cookies in the req");
+    console.log(AccessToken);
 
-    const decoded = jwt.decode(cookies.AnccessToke, accessKey);
+    if (!req.cookies) throw new Error("no cookies in the req");
 
-    return res.status(200).send(decoded);
+    // const verify = jwt.verify(cookies.AnccessToke, accessKey);
+
+    const decoded = jwt.decode(AccessToken, accessKey);
+
+    if (!decoded) throw new Error("the token is invalid");
+
+    return res
+      .status(200)
+      .json({ token: decoded, message: "you are authenticated" });
   } catch (err) {
     res.status(404).message({ message: err.message });
   }

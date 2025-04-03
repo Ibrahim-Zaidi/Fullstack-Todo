@@ -4,6 +4,7 @@ import cors from "cors";
 import general_routes from "./routes/generalRoute.js";
 import auth_routes from "./routes/authRoute.js";
 import "dotenv/config";
+import errorHanlder from "./middlwares/errorMiddleware.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(errorHanlder);
 
 // routes
 
