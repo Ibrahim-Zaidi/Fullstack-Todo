@@ -1,15 +1,23 @@
 import styles from "./Input.module.css";
+import { useTodo } from "../../Contexts/todoContext";
+function Input() {
+  const {
+    state: { inputVal },
+    add_todo,
+    dispatch,
+  } = useTodo();
 
-function Input({ dispatch, inputval }) {
   return (
     <div className={styles.inputContainer}>
       <input
         type="text"
         placeholder="type something ..."
-        onChange={(e) => dispatch({ type: "input", payload: e.target.value })}
-        value={inputval}
+        onChange={(e) =>
+          dispatch({ type: "setInputValue", payload: e.target.value })
+        }
+        value={inputVal}
       />
-      <button>Y</button>
+      <button onClick={() => add_todo()}>Y</button>
     </div>
   );
 }
