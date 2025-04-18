@@ -3,11 +3,19 @@
   left: 2rem;
   top: 8rem; */
   margin: 0 auto;
-  padding-bottom: 12rem;
+  padding-bottom: 5rem;
   font-weight: 800;
   font-size: 3.6rem;
 
   /* margin: 0 auto; */
+}
+
+.btns_container button {
+  padding-top: 2rem;
+  font-size: 2rem;
+  background-color: transparent;
+  color: wheat;
+  border: transparent;
 }
 
 .title {
@@ -76,8 +84,27 @@
     
 } */
 
-@media (min-width: 700) {
-  .login_container {
-    width: 600px;
+@media (max-width: 500px) {
+  .bigTitle {
+    font-size: 2.5rem;
+    align-items: center;
+    /* padding-left: 2rem; */
   }
+
+  .login_container {
+    width: 300px;
+  }
+
+  .btns_container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  /* .btns_container button {
+    padding-top: 2rem;
+    font-size: 2rem;
+    background-color: transparent;
+    color: wheat;
+    border: transparent;
+  } */
 }

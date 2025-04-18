@@ -1,17 +1,13 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const accessKey = process.env.SECRET_KEY;
+const accessKey = process.env.JWT_SECRET_KEY;
 
 export default function check_auth_route(req, res) {
   try {
     const { AccessToken } = req.cookies;
 
-    console.log(AccessToken);
-
-    if (!req.cookies) throw new Error("no cookies in the req");
-
-    // const verify = jwt.verify(cookies.AnccessToke, accessKey);
+    if (!AccessToken) throw new Error("no cookies in the req");
 
     const decoded = jwt.decode(AccessToken, accessKey);
 
@@ -24,3 +20,4 @@ export default function check_auth_route(req, res) {
     res.status(404).message({ message: err.message });
   }
 }
+

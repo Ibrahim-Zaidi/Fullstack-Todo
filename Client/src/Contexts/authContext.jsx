@@ -8,49 +8,57 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   async function is_auth() {
     try {
-      const response = await api().get("/main/me");
+      setIsLoading(true);
 
-      if (!response) throw new Error("something went weong");
+      const response = await api.get("/main/me");
 
-      const data = response.data;
+      console.log(response.data);
 
-      if (!data) throw new Error("data didnt fetch");
-
-      setUser(data.user_id);
+      setUser(response.data.token);
       setIsAuthenticated(true);
       setError("");
+
+      return true;
     } catch (err) {
       setUser(null);
       setIsAuthenticated(false);
-      setError(err);
+      setError(err.message);
+
+      return false;
+    } finally {
+      setIsLoading(false);
     }
   }
 
-  useEffect(function () {
+  useEffect(() => {
     is_auth();
   }, []);
 
-  async function login(email, password) {
+  // login
+
+  async function login(identifier, password) {
     try {
-      const response = await api().post("/login", { email, password });
+      // console.log(identifier, password);
 
-      if (!response) throw new Error("login failed");
-
-      await is_auth();
-      navigate("/");
-      return true;
+      const response = await api.post("/login", { identifier, password });
+      console.log(response);
+      setIsAuthenticated(false);
+      const isAuthSuccess = await is_auth();
+      return isAuthSuccess;
     } catch (err) {
-      setError(err.message || "login failed");
+      setError("Login failed");
       return false;
     }
   }
 
   return (
-    <AuthContext.Provider value={{ login, user, isAuthenticated, error }}>
+    <AuthContext.Provider
+      value={{ login, user, isAuthenticated, error, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -58,7 +66,7 @@ function AuthProvider({ children }) {
 
 function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("something went wrong");
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
 
   return context;
 }

@@ -2,11 +2,35 @@
   /* background-color: red; */
   margin: 0;
   padding: 0;
-  width: 400px;
+  width: 300px;
   min-height: 700px;
   display: flex;
   flex-direction: column;
   /* gap: 4rem; */
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 2rem;
+  top: 2rem;
+  justify-self: center;
+  gap: 2rem;
+  /* background-color: red; */
+}
+
+.logoutBtn {
+  color: antiquewhite;
+  border: 3px solid black;
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 0.5rem 0.5rem;
+}
+
+.logoutBtn:hover {
+  background-color: rgb(63, 60, 60);
+  animation: 1s all;
 }
 
 @media (min-width: 600px) {

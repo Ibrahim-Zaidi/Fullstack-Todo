@@ -4,7 +4,7 @@ import add_todo from "../controllers/addTodo.js";
 import get_todos from "../controllers/getTodos.js";
 import delete_todos from "../controllers/deleteTodos.js";
 import deleteOneTodo from "../controllers/deleteOneTodo.js";
-import check_auth_route from "../controllers/checkAuth.js";
+import check_auth_route from "../controllers/checkIsAuthenticated.js";
 import updateTodo from "../controllers/updateTodo.js";
 import logout from "../controllers/logoutController.js";
 

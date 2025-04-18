@@ -1,6 +1,6 @@
 function TodoElement({ todo }) {
   // const textDeco = todo.done
-  //   ? { textDecoration: "line-through" }
+  // ? { textDecoration: "line-through" }
   //   : { textDecoration: "none" };
 
   return (

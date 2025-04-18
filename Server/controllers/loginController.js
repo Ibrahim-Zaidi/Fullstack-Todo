@@ -1,3 +1,4 @@
+import {Op} from "sequelize";
 import users from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -5,15 +6,17 @@ import "dotenv/config";
 
 async function login(req, res) {
   try {
-    const { email, password } = req.body;
+    const {identifier, password } = req.body;
 
-    if (!email || !password) {
+    if (!identifier || !password) {
       throw new Error("please Enter all your information");
     }
 
     const user = await users.findOne({
-      where: {
-        email: email,
+      [Op.or] : {
+        email: identifier,
+        number : identifier,
+        username : identifier,
       },
       raw: true,
     });
@@ -27,9 +30,9 @@ async function login(req, res) {
 
       const accessToken = jwt.sign(
         { user_id, username },
-        process.env.SECRET_KEY,
+        process.env.JWT_SECRET_KEY,
         {
-          expiresIn: 3600,
+          expiresIn: 36000,
         }
       );
 
@@ -42,6 +45,7 @@ async function login(req, res) {
     }
 
     throw new Error("you made a wrong password");
+
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

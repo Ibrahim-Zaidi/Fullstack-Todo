@@ -6,12 +6,12 @@ async function auth(req, res, next) {
     const { AccessToken } = req.cookies;
 
     if (!AccessToken) {
-      throw new Error("there is no token ");
+      throw new Error("there is no token found!");
     }
 
     let token = AccessToken;
 
-    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
       if (!err) {
         req.user = user;
         next();

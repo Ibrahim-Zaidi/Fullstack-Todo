@@ -1,6 +1,7 @@
 import styles from "./Register.module.css";
 import { useReducer } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router";
+import api from "../api/axios";
 
 const initialValues = {
   username: "",
@@ -14,67 +15,74 @@ const initialValues = {
 function reducer(state, action) {
   switch (action.type) {
     case "setUsername": {
-      // if (action.payload.length < 5) return;
-
       return { ...state, username: action.payload };
     }
     case "setNumber": {
-      // if (action.payload.length < 5) return;
-
       return { ...state, number: action.payload };
     }
     case "setEmail": {
-      // if (action.payload.length < 5) return;
-
       return { ...state, email: action.payload };
     }
     case "setPassword": {
-      // if (action.payload.length < 5) return;
-
       return { ...state, password: action.payload };
     }
     case "success": {
-      return;
+      return { ...state, success: action.payload, error: "" };
     }
+
     case "error": {
+      return { ...state, error: action.payload, success: "" };
+    }
+    case "reset": {
+      return initialValues;
     }
 
     default: {
-      return initialValues;
+      throw new Error("unkown action");
     }
   }
 }
 
 function Register() {
-  const [{ username, number, password, email }, dispatch] = useReducer(
-    reducer,
-    initialValues
-  );
+  const [{ username, number, password, email, error, success }, dispatch] =
+    useReducer(reducer, initialValues);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
-      const response = await axios.post("http://localhost:3000/register", {
+      if (!username || !number || !email || !password) {
+        dispatch({ type: "error", payload: "All fields must be filled out" });
+        return;
+      }
+
+      const response = await api.post("/register", {
         username,
         number,
-        password,
         email,
+        password,
       });
+      console.log(response);
 
-      dispatch({ type: "success", payload: response.data });
+      dispatch({ type: "success", payload: "registation successful!" });
+      dispatch({ type: "reset" });
+
+      navigate("/login");
     } catch (error) {
-      dispatch({ type: "error", payload: error.response.data });
+      dispatch({ type: "error", payload: "regsitration failed" });
     }
   }
 
   return (
     <>
-      {/* {error && <h1> {error} </h1>} */}
       <div className={styles.title}>
         <h1>Sign to our TODO</h1>
       </div>
 
       <form onSubmit={(e) => handleSubmit(e)} className={styles.form_container}>
+        {error && <h2>{error}</h2>}
+        {success && <h2>{success}</h2>}
         <div>
           <label> Username </label>
           <input
@@ -97,7 +105,7 @@ function Register() {
           <label> Email </label>
 
           <input
-            type="text"
+            type="email"
             onChange={(e) =>
               dispatch({ type: "setEmail", payload: e.target.value })
             }
@@ -106,15 +114,17 @@ function Register() {
         <div>
           <label> Password </label>
           <input
-            type="text"
+            type="password"
             onChange={(e) =>
               dispatch({ type: "setPassword", payload: e.target.value })
             }
           />
         </div>
-
-        <button>Submit</button>
       </form>
+      <div className={styles.btn_container}>
+        <button onClick={() => navigate("/login")}>LogIn</button>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
     </>
   );
 }
